@@ -31,34 +31,47 @@ def my_each_with_index
 end
 
 def my_select
-  return to_enum unless block_given?
-  self_class = self.class
+   return to_enum unless block_given?
+  my_enumerable = self.class == Array ? [] : {}
+     if my_enumerable.class == Array
+         my_each do |n|
+          my_enumerable.push(n) if yield(n)
+         end
+     else
+         my_each do |key, value|
+          my_enumerable[key]  =  value if yield(key, value)
+         end
+     end
+    my_enumerable
+end
 
-  self_class == Array ? [] : {}
-    if self_class == Array
-        my_each do |x|
-        self_class.push(x) if yield(x)
-        end
-    else
-        my_each do |key, value|
-        self_class[key]  =  value) if yield (key, value)
-        end
+def my_all?(my_parameter = nil)
+  return false unless block_given? || !my_parameter.nil?
+  result = true
+  if self.class == Array
+    my_each do |x|
+      if block_given?
+        result = false unless yield(x)
+      elsif my_parameter.class == Regexp
+        result = false unless x.match(my_parameter)
+      elsif my_parameter.class <= Numeric
+        result = false unless x == my_parameter
+      else
+        result = false unless x.class <= my_parameter
+      end
+      break unless result
     end
-  self_class
+  else
+    my_each do |key, value|
+      result = false unless yield(key, value)
+    end
+  end
+  result
 end
-
-
-
+  
 
 
 
 
 end
-
- array = [1, 2, 3, 4]
- aar = 1..5
- aar.each_with_index {|value, idx| puts "#{idx + 1} #{ value}"}
- puts
- aar.my_each_with_index {|value, idx| puts "#{idx + 1} #{ value}" }
- puts
 
