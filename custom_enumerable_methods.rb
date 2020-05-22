@@ -71,3 +71,80 @@ def my_all?(my_parameter = nil)
   result
 end
 
+def my_any? (our_parameter = nil)
+  return false unless block_given? || !our_parameter.nil?
+  result = false
+  if self.class == Array
+    my_each do |i|
+      if block_given?
+        result = true if yield(i)
+      elsif our_parameter.class == Regexp
+        result = true if i.match(our_parameter)
+      elsif our_parameter.class == String
+        result = true if i == our_parameter
+      elsif i.class <= our_parameter
+        result = true
+      end
+    end
+  else
+    my_each do |key, value|
+      result = true if yield(key, value)
+    end
+  end
+result
+end
+
+def my_none?(my_parameter = nil)
+  return false unless block_given? || !my_parameter.nil?
+  result = true
+  if self.class == Array
+    my_each do |x|
+      if block_given?
+        result = false if yield(x)
+      elsif my_parameter.class == Regexp
+        result = false if x.match(my_parameter)
+      elsif my_parameter.class <= Numeric
+        result = false if x == my_parameter
+      elsif x.class <= my_parameter
+        result = false
+      end
+      break unless result
+    end
+  else
+    my_each do |key, value|
+      result = false if yield(key, value)
+      break unless result
+    end
+  end
+  result
+end
+ 
+def my_count(my_variable = nil)
+  my_counter = 0
+  if block_given?
+    if self.class == Array
+      my_each do |n|
+        my_counter += 1 if yield(n)
+      end
+    else
+      my_each do |key, value|
+        my_counter += 1 if yield(key, value)
+      end
+    end
+   elsif !block_given? && my_variable.nil?
+     return length
+   elsif !block_given? && !my_variable.nil?
+     my_each do |n|
+       my_counter += 1 if n == my_variable
+     end
+  end
+  my_counter
+end
+
+
+
+
+
+end
+
+
