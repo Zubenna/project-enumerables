@@ -141,10 +141,36 @@ def my_count(my_variable = nil)
   my_counter
 end
 
+def my_map
+  return to_enum unless block_given?
+  new_array = []
+  if self.class == Array
+    my_each do |n|
+      new_array << yield(n)
+    end
+  else
+    my_each do |key, value| 
+      new_array << yield(key, value)
+    end
+  end
+  new_array
+end
 
-
+def my_inject (my_parameter = nil)
+  if my_parameter != nil
+    accum = my_parameter
+    self.my_each do |n|
+      accum = yield(accum, n)
+    end
+  else
+    accum = self[0]
+    self.my_each_with_index do |n, i|
+      accum = yield(accum, self[i + 1]) if (i < self.length - 1)
+    end
+  end
+  return accum
+end
 
 
 end
-
 
