@@ -1,5 +1,5 @@
 module Enumerable
-def my_each 
+def my_each
   return to_enum unless block_given?
   x = 0
   self_class = self.class
@@ -7,7 +7,9 @@ def my_each
             self
           elsif self_class == Range
             to_a
-          end 
+          else
+            flatten
+          end
   while x < array.length
        if self_class == Hash
           yield array[x], array[x+1]
@@ -67,11 +69,5 @@ def my_all?(my_parameter = nil)
     end
   end
   result
-end
-  
-
-
-
-
 end
 
