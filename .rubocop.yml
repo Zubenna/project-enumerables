@@ -11,7 +11,7 @@ Layout/LineLength:
 Metrics/MethodLength:
   Max: 25
 Metrics/ModuleLength:
-  max: 180
+  Max: 180
 Metrics/AbcSize:
   Max: 50
 Metrics/ClassLength:
@@ -20,10 +20,9 @@ Metrics/BlockLength:
   ExcludedMethods: ['describe']
   Max: 30
 Metrics/PerceivedComplexity:
-  Enable: false
+  Max: 18
 Metrics/CyclomaticComplexity:
-  Enable: false
-
+  Max: 15
 
 Style/Documentation:
   Enabled: false
