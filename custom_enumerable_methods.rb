@@ -1,9 +1,10 @@
 module Enumerable
-def my_each
-  return to_enum unless block_given?
-  x = 0
-  self_class = self.class
-  array = if self_class == Array
+  def my_each
+    return to_enum unless block_given?
+
+    x = 0
+    self_class = self.class
+    array = if self_class == Array
             self
           elsif self_class == Range
             to_a
@@ -11,18 +12,19 @@ def my_each
             flatten
           end
   while x < array.length
-       if self_class == Hash
-          yield array[x], array[x+1]
-          x += 2
-       else
-         yield array[x]
-         x += 1
-       end
+    if self_class == Hash
+      yield array[x], array[x + 1]
+      x += 2
+    else
+      yield array[x]
+      x += 1
+    end
   end
 end
 
 def my_each_with_index 
   return to_enum unless block_given?
+
   self_class = self.class
   x = 0
   array = self_class == Array ? self : to_a
@@ -33,7 +35,8 @@ def my_each_with_index
 end
 
 def my_select
-   return to_enum unless block_given?
+  return to_enum unless block_given?
+
   my_enumerable = self.class == Array ? [] : {}
      if my_enumerable.class == Array
          my_each do |n|
@@ -49,6 +52,7 @@ end
 
 def my_all?(my_parameter = nil)
   return false unless block_given? || !my_parameter.nil?
+
   result = true
   if self.class == Array
     my_each do |x|
@@ -73,6 +77,7 @@ end
 
 def my_any? (our_parameter = nil)
   return false unless block_given? || !our_parameter.nil?
+
   result = false
   if self.class == Array
     my_each do |i|
@@ -96,6 +101,7 @@ end
 
 def my_none?(my_parameter = nil)
   return false unless block_given? || !my_parameter.nil?
+
   result = true
   if self.class == Array
     my_each do |x|
@@ -122,6 +128,7 @@ end
 def my_count(my_variable = nil)
   my_counter = 0
   if block_given?
+
     if self.class == Array
       my_each do |n|
         my_counter += 1 if yield(n)
@@ -143,6 +150,7 @@ end
 
 def my_map
   return to_enum unless block_given?
+  
   new_array = []
   if self.class == Array
     my_each do |n|
