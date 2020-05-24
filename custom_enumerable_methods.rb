@@ -1,110 +1,111 @@
 module Enumerable
+# rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
   def my_each
     return to_enum unless block_given?
 
     x = 0
     self_class = self.class
     array = if self_class == Array
-            self
-          elsif self_class == Range
-            to_a
-          else
-            flatten
-          end
-  while x < array.length
-    if self_class == Hash
-      yield array[x], array[x + 1]
-      x += 2
-    else
-      yield array[x]
-      x += 1
+              self
+            elsif self_class == Range
+              to_a
+            else
+              flatten
+            end
+    while x < array.length
+      if self_class == Hash
+        yield array[x], array[x + 1]
+        x += 2
+      else
+        yield array[x]
+        x += 1
+      end
     end
   end
-end
 
-def my_each_with_index 
-  return to_enum unless block_given?
+  def my_each_with_index
+    return to_enum unless block_given?
 
-  self_class = self.class
-  x = 0
-  array = self_class == Array ? self : to_a
+    self_class = self.class
+    x = 0
+    array = self_class == Array ? self : to_a
     while x < array.length
       yield array[x], x
       x += 1
-    end 
-end
+    end
+  end
 
-def my_select
-  return to_enum unless block_given?
+  def my_select
+    return to_enum unless block_given?
 
-  my_enumerable = self.class == Array ? [] : {}
-     if my_enumerable.class == Array
-         my_each do |n|
+    my_enumerable = self.class == Array ? [] : {}
+      if my_enumerable.class == Array
+        my_each do |n|
           my_enumerable.push(n) if yield(n)
-         end
-     else
-         my_each do |key, value|
-          my_enumerable[key]  =  value if yield(key, value)
-         end
-     end
-    my_enumerable
-end
-
-def my_all?(my_parameter = nil)
-  return false unless block_given? || !my_parameter.nil?
-
-  result = true
-  if self.class == Array
-    my_each do |x|
-      if block_given?
-        result = false unless yield(x)
-      elsif my_parameter.class == Regexp
-        result = false unless x.match(my_parameter)
-      elsif my_parameter.class <= Numeric
-        result = false unless x == my_parameter
+        end
       else
-        result = false unless x.class <= my_parameter
+        my_each do |key, value|
+          my_enumerable[key]  =  value if yield(key, value)
+        end
       end
-      break unless result
-    end
-  else
-    my_each do |key, value|
-      result = false unless yield(key, value)
-    end
+    my_enumerable
   end
+
+  def my_all?(my_parameter = nil)
+    return false unless block_given? || !my_parameter.nil?
+
+    result = true
+    if self.class == Array
+      my_each do |x|
+        if block_given?
+          result = false unless yield(x)
+        elsif my_parameter.class == Regexp
+          result = false unless x.match(my_parameter)
+        elsif my_parameter.class <= Numeric
+          result = false unless x == my_parameter
+        else
+          result = false unless x.class <= my_parameter
+        end
+        break unless result
+      end
+    else
+      my_each do |key, value|
+        result = false unless yield(key, value)
+      end
+     end
   result
-end
+  end
 
-def my_any? (our_parameter = nil)
-  return false unless block_given? || !our_parameter.nil?
+  def my_any? (our_parameter = nil)
+    return false unless block_given? || !our_parameter.nil?
 
-  result = false
-  if self.class == Array
-    my_each do |i|
-      if block_given?
-        result = true if yield(i)
-      elsif our_parameter.class == Regexp
-        result = true if i.match(our_parameter)
-      elsif our_parameter.class == String
-        result = true if i == our_parameter
-      elsif i.class <= our_parameter
-        result = true
+    result = false
+    if self.class == Array
+      my_each do |i|
+        if block_given?
+          result = true if yield(i)
+        elsif our_parameter.class == Regexp
+          result = true if i.match(our_parameter)
+        elsif our_parameter.class == String
+          result = true if i == our_parameter
+        elsif i.class <= our_parameter
+          result = true
+        end
+      end
+    else
+      my_each do |key, value|
+        result = true if yield(key, value)
       end
     end
-  else
-    my_each do |key, value|
-      result = true if yield(key, value)
-    end
+  result
   end
-result
-end
 
-def my_none?(my_parameter = nil)
-  return false unless block_given? || !my_parameter.nil?
+  def my_none?(my_parameter = nil)
+    return false unless block_given? || !my_parameter.nil?
 
-  result = true
-  if self.class == Array
-    my_each do |x|
+    result = true
+      if self.class == Array
+        my_each do |x|
       if block_given?
         result = false if yield(x)
       elsif my_parameter.class == Regexp
@@ -115,19 +116,19 @@ def my_none?(my_parameter = nil)
         result = false
       end
       break unless result
+      end
+      else
+        my_each do |key, value|
+          result = false if yield(key, value)
+        break unless result
+      end
     end
-  else
-    my_each do |key, value|
-      result = false if yield(key, value)
-      break unless result
-    end
-  end
   result
-end
+  end
  
-def my_count(my_variable = nil)
-  my_counter = 0
-  if block_given?
+  def my_count(my_variable = nil)
+    my_counter = 0
+    if block_given?
 
     if self.class == Array
       my_each do |n|
@@ -146,38 +147,38 @@ def my_count(my_variable = nil)
      end
   end
   my_counter
-end
-
-def my_map
-  return to_enum unless block_given?
-  
-  new_array = []
-  if self.class == Array
-    my_each do |n|
-      new_array << yield(n)
-    end
-  else
-    my_each do |key, value| 
-      new_array << yield(key, value)
-    end
   end
-  new_array
-end
 
-def my_inject (my_parameter = nil)
-  if my_parameter != nil
-    accum = my_parameter
-    self.my_each do |n|
+  def my_map
+    return to_enum unless block_given?
+
+    new_array = []
+    if self.class == Array
+      my_each do |n|
+        new_array << yield(n)
+      end
+    else
+      my_each do |key, value| 
+        new_array << yield(key, value)
+      end
+    end
+    new_array
+  end
+
+  def my_inject (my_parameter = nil)
+    if my_parameter != nil
+      accum = my_parameter
+      self.my_each do |n|
       accum = yield(accum, n)
     end
-  else
-    accum = self[0]
-    self.my_each_with_index do |n, i|
+    else
+      accum = self[0]
+      self.my_each_with_index do |n, i|
       accum = yield(accum, self[i + 1]) if (i < self.length - 1)
     end
-  end
+    end
   return accum
-end
+  end
 end
 
 #Testing my_inject with multiply_els method
