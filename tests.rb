@@ -13,7 +13,7 @@ puts
 print 'test_words.my_each { |n| n } output: '
 test_words.my_each { |n| print n }
 puts
-puts 'test_hash.each { |key, value| puts Key: "#{key}, Value: #{value}"} output:'
+puts "test_hash.each { |key, value| puts Key: {key}, Value: {value} } output:"
 test_hash.my_each { |key, value| puts "Key: #{key}, Value: #{value}" }
 puts
 puts
@@ -22,28 +22,28 @@ puts
 puts 'test_array.my_each_with_index do |element, index|
 puts "Index: #{index}, Element:#{element}"
 end output: '
-  test_array.my_each_with_index do |element, index|
-    puts "Index: #{index}, Element:#{element}"
-  end
+test_array.my_each_with_index do |element, index|
+puts "Index: #{index}, Element:#{element}"
+end
 puts 'test_words.my_each_with_index do |element, index|
 puts "Index: #{index}, Element:#{element}"
 end output: '
-  test_words.my_each_with_index do |element, index|
-    puts "Index: #{index}, Element:#{element}"
-  end
+test_words.my_each_with_index do |element, index|
+puts "Index: #{index}, Element:#{element}"
+end
 puts 'test_hash.my_each_with_index do |element, index|
 puts "Index: #{index}, Element: #{element}"
 end output: '
-  test_hash.my_each_with_index do |element, index|
-    puts "Index: #{index}, Element: #{element}"
-  end
+test_hash.my_each_with_index do |element, index|
+puts "Index: #{index}, Element: #{element}"
+end
 puts
 puts
 # Tests for #my_select
 puts 'test_array.my_select(&:odd?) output: '
 p test_array.my_select(&:odd?)
 puts 'test_words.my_select() output: '
-p (test_words.my_select { |words| words.length >= 4 })
+p(test_words.my_select { |words| words.length >= 4 })
 puts 'test_hash.my_select { |key, value| value == 2 } output: '
 p(test_hash.my_select { |_key, value| value == 2 })
 puts

@@ -104,20 +104,20 @@ module Enumerable
     return false unless block_given? || !my_parameter.nil?
 
     result = true
-    if self.class == Array
-      my_each do |x|
-        if block_given?
-          result = false if yield(x)
-        elsif my_parameter.class == Regexp
-          result = false if x.match(my_parameter)
-        elsif my_parameter.class <= Numeric
-          result = false if x == my_parameter
-        elsif x.class <= my_parameter
-          result = false
-      end
-      break unless result
-      end
-    else
+      if self.class == Array
+        my_each do |x|
+          if block_given?
+            result = false if yield(x)
+          elsif my_parameter.class == Regexp
+            result = false if x.match(my_parameter)
+          elsif my_parameter.class <= Numeric
+            result = false if x == my_parameter
+          elsif x.class <= my_parameter
+            result = false
+          end
+          break unless result
+        end
+      else
       my_each do |key, value|
         result = false if yield(key, value)
         break unless result
@@ -130,11 +130,11 @@ module Enumerable
     my_counter = 0
     if block_given?
 
-    if self.class == Array
-      my_each do |n|
-        my_counter += 1 if yield(n)
-      end
-    else
+      if self.class == Array
+        my_each do |n|
+          my_counter += 1 if yield(n)
+        end
+      else
       my_each do |key, value|
         my_counter += 1 if yield(key, value)
       end
@@ -168,14 +168,14 @@ module Enumerable
   def my_inject(my_parameter = nil)
     if !my_parameter.nil?
       accum = my_parameter
-        my_each do |n|
-          accum = yield(accum, n)
-        end
+      my_each do |n|
+        accum = yield(accum, n)
+      end
     else
       accum = self[0]
-        my_each_with_index do |i|
-          accum = yield(accum, self[i + 1]) if i < self.length - 1
-        end
+      my_each_with_index do |i|
+        accum = yield(accum, [i + 1]) if i < length - 1
+      end
     end
     accum
   end
@@ -190,11 +190,10 @@ def multiply_els(arr)
 end
 
 puts
-puts'multiply_els([2, 4, 5]) output: ' + multiply_els([2, 4, 5]).to_s
+puts'multiply_els([2, 4, 5]) output: ' + multiply_els( [2, 4, 5] ).to_s
 puts
 puts
 # Calling my_map with a proc
 test_proc = proc { |i| i * 5 }
 test_array = [5, 7, 9, 5]
-puts'array.my_map(&test_proc) output: ' + test_array.my_map(&test_proc).to_s
-
+puts'array.my_map(&test_proc) output: ' + test_array.my_map( &test_proc ).to_s
