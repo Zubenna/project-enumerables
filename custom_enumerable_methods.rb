@@ -104,20 +104,20 @@ module Enumerable
     return false unless block_given? || !my_parameter.nil?
 
     result = true
-      if self.class == Array
-        my_each do |x|
-          if block_given?
-            result = false if yield(x)
-          elsif my_parameter.class == Regexp
-            result = false if x.match(my_parameter)
-          elsif my_parameter.class <= Numeric
-            result = false if x == my_parameter
-          elsif x.class <= my_parameter
-            result = false
-          end
-          break unless result
-        end
-      else
+    if self.class == Array
+      my_each do |x|
+        if block_given?
+          result = false if yield(x)
+        elsif my_parameter.class == Regexp
+          result = false if x.match(my_parameter)
+        elsif my_parameter.class <= Numeric
+          result = false if x == my_parameter
+        elsif x.class <= my_parameter
+          result = false
+      end
+      break unless result
+      end
+    else
       my_each do |key, value|
         result = false if yield(key, value)
         break unless result
@@ -135,10 +135,10 @@ module Enumerable
           my_counter += 1 if yield(n)
         end
       else
-      my_each do |key, value|
-        my_counter += 1 if yield(key, value)
+        my_each do |key, value|
+          my_counter += 1 if yield(key, value)
+        end
       end
-    end
     elsif !block_given? && my_variable.nil?
       return length
     elsif !block_given? && !my_variable.nil?
@@ -190,10 +190,10 @@ def multiply_els(arr)
 end
 
 puts
-puts'multiply_els([2, 4, 5]) output: ' + multiply_els( [2, 4, 5] ).to_s
+puts' multiply_els([2, 4, 5]) output: ' + multiply_els([2, 4, 5]).to_s
 puts
 puts
 # Calling my_map with a proc
 test_proc = proc { |i| i * 5 }
 test_array = [5, 7, 9, 5]
-puts'array.my_map(&test_proc) output: ' + test_array.my_map( &test_proc ).to_s
+puts' array.my_map(&test_proc) output: ' + test_array.my_map(&test_proc).to_s

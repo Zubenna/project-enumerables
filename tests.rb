@@ -13,7 +13,7 @@ puts
 print 'test_words.my_each { |n| n } output: '
 test_words.my_each { |n| print n }
 puts
-puts "test_hash.each { |key, value| puts Key: {key}, Value: {value} } output:"
+puts 'test_hash.each { |key, value| puts Key: {key}, Value: {value} } output:'
 test_hash.my_each { |key, value| puts "Key: #{key}, Value: #{value}" }
 puts
 puts
@@ -23,19 +23,19 @@ puts 'test_array.my_each_with_index do |element, index|
 puts "Index: #{index}, Element:#{element}"
 end output: '
 test_array.my_each_with_index do |element, index|
-puts "Index: #{index}, Element:#{element}"
+  puts "Index: #{index}, Element:#{element}"
 end
 puts 'test_words.my_each_with_index do |element, index|
 puts "Index: #{index}, Element:#{element}"
 end output: '
 test_words.my_each_with_index do |element, index|
-puts "Index: #{index}, Element:#{element}"
+  puts "Index: #{index}, Element:#{element}"
 end
 puts 'test_hash.my_each_with_index do |element, index|
 puts "Index: #{index}, Element: #{element}"
 end output: '
 test_hash.my_each_with_index do |element, index|
-puts "Index: #{index}, Element: #{element}"
+  puts "Index: #{index}, Element: #{element}"
 end
 puts
 puts
