@@ -172,6 +172,19 @@ def my_inject (my_parameter = nil)
 end
 end
 
+#Testing my_inject with multiply_els method
+def multiply_els(arr)
+  arr.my_inject do |parameter, n|
+    parameter * n
+  end
+end
 
-
+puts
+puts 'multiply_els([2, 4, 5]) output: ' + multiply_els([2, 4, 5]).to_s
+puts
+puts
+#Calling my_map with a proc
+test_proc = proc { |i| i * 5 }
+test_array = [5, 7, 9, 5]
+puts 'array.my_map(&test_proc) output: ' + test_array.my_map(&test_proc).to_s
 
