@@ -1,5 +1,5 @@
 module Enumerable
-# rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
   def my_each
     return to_enum unless block_given?
 
@@ -39,15 +39,15 @@ module Enumerable
     return to_enum unless block_given?
 
     my_enumerable = self.class == Array ? [] : {}
-      if my_enumerable.class == Array
-        my_each do |n|
-          my_enumerable.push(n) if yield(n)
-        end
-      else
-        my_each do |key, value|
-          my_enumerable[key]  =  value if yield(key, value)
-        end
+    if my_enumerable.class == Array
+      my_each do |n|
+        my_enumerable.push(n) if yield(n)
       end
+    else
+      my_each do |key, value|
+        my_enumerable[key] = value if yield(key, value)
+      end
+    end
     my_enumerable
   end
 
@@ -72,11 +72,11 @@ module Enumerable
       my_each do |key, value|
         result = false unless yield(key, value)
       end
-     end
-  result
+    end
+    result
   end
 
-  def my_any? (our_parameter = nil)
+  def my_any?(our_parameter = nil)
     return false unless block_given? || !our_parameter.nil?
 
     result = false
@@ -97,35 +97,35 @@ module Enumerable
         result = true if yield(key, value)
       end
     end
-  result
+    result
   end
 
   def my_none?(my_parameter = nil)
     return false unless block_given? || !my_parameter.nil?
 
     result = true
-      if self.class == Array
-        my_each do |x|
-      if block_given?
-        result = false if yield(x)
-      elsif my_parameter.class == Regexp
-        result = false if x.match(my_parameter)
-      elsif my_parameter.class <= Numeric
-        result = false if x == my_parameter
-      elsif x.class <= my_parameter
-        result = false
+    if self.class == Array
+      my_each do |x|
+        if block_given?
+          result = false if yield(x)
+        elsif my_parameter.class == Regexp
+          result = false if x.match(my_parameter)
+        elsif my_parameter.class <= Numeric
+          result = false if x == my_parameter
+        elsif x.class <= my_parameter
+          result = false
       end
       break unless result
       end
-      else
-        my_each do |key, value|
-          result = false if yield(key, value)
+    else
+      my_each do |key, value|
+        result = false if yield(key, value)
         break unless result
       end
     end
-  result
+    result
   end
- 
+
   def my_count(my_variable = nil)
     my_counter = 0
     if block_given?
@@ -139,14 +139,14 @@ module Enumerable
         my_counter += 1 if yield(key, value)
       end
     end
-   elsif !block_given? && my_variable.nil?
-     return length
-   elsif !block_given? && !my_variable.nil?
-     my_each do |n|
-       my_counter += 1 if n == my_variable
-     end
-  end
-  my_counter
+    elsif !block_given? && my_variable.nil?
+      return length
+    elsif !block_given? && !my_variable.nil?
+      my_each do |n|
+        my_counter += 1 if n == my_variable
+      end
+    end
+    my_counter
   end
 
   def my_map
@@ -158,30 +158,31 @@ module Enumerable
         new_array << yield(n)
       end
     else
-      my_each do |key, value| 
+      my_each do |key, value|
         new_array << yield(key, value)
       end
     end
     new_array
   end
 
-  def my_inject (my_parameter = nil)
-    if my_parameter != nil
+  def my_inject(my_parameter = nil)
+    if !my_parameter.nil?
       accum = my_parameter
-      self.my_each do |n|
-      accum = yield(accum, n)
-    end
+        my_each do |n|
+          accum = yield(accum, n)
+        end
     else
       accum = self[0]
-      self.my_each_with_index do |n, i|
-      accum = yield(accum, self[i + 1]) if (i < self.length - 1)
+        my_each_with_index do |i|
+          accum = yield(accum, self[i + 1]) if i < self.length - 1
+        end
     end
-    end
-  return accum
+    accum
   end
+  # rubocop:enable` after disabling it.
 end
 
-#Testing my_inject with multiply_els method
+# Testing my_inject with multiply_els method
 def multiply_els(arr)
   arr.my_inject do |parameter, n|
     parameter * n
@@ -189,11 +190,11 @@ def multiply_els(arr)
 end
 
 puts
-puts 'multiply_els([2, 4, 5]) output: ' + multiply_els([2, 4, 5]).to_s
+puts'multiply_els([2, 4, 5]) output: ' + multiply_els([2, 4, 5]).to_s
 puts
 puts
-#Calling my_map with a proc
+# Calling my_map with a proc
 test_proc = proc { |i| i * 5 }
 test_array = [5, 7, 9, 5]
-puts 'array.my_map(&test_proc) output: ' + test_array.my_map(&test_proc).to_s
+puts'array.my_map(&test_proc) output: ' + test_array.my_map(&test_proc).to_s
 
