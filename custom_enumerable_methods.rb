@@ -1,5 +1,4 @@
 module Enumerable
-  # rubocop:disable Metrics/PerceivedComplexity,Metrics/CyclomaticComplexity
   def my_each
     return to_enum unless block_given?
 
@@ -115,7 +114,7 @@ module Enumerable
         elsif x.class <= my_parameter
           result = false
         end
-      break unless result
+        break unless result
       end
     else
       my_each do |key, value|
