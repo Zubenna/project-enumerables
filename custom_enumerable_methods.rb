@@ -259,6 +259,3 @@ puts
 test_proc = proc { |i| i * 5 }
 test_array = [5, 7, 9, 5]
 puts 'array.my_map(&test_proc) output: ' + test_array.my_map(&test_proc).to_s
-
-
-
