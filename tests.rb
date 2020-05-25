@@ -107,7 +107,7 @@ puts
 puts 'test_array.my_inject { |sum, n| sum + n } output: '
 p(test_array.my_inject { |sum, n| sum + n })
 puts 'test_array.my_inject { |sum, n| sum + n } output: '
-p(test_array.my_inject { |sum| sum * 3 })
+p(test_array.my_inject { |product, n| product * n })
 puts 'longest_word = test_words.inject do |memo, word|
   memo.length > word.length ? memo : word
 end output: '

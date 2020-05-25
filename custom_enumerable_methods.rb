@@ -51,6 +51,8 @@ module Enumerable
   end
 
   def my_all?(my_parameter = nil)
+    return true if (self.class == Array && count.zero?) || (!block_given? &&
+        my_parameter.nil? && !include?(nil))
     return false unless block_given? || !my_parameter.nil?
 
     result = true
@@ -76,7 +78,9 @@ module Enumerable
   end
 
   def my_any?(our_parameter = nil)
-    return false unless block_given? || !our_parameter.nil?
+    return false if (self.class == Array && count.zero?) || (!block_given? &&
+    our_parameter.nil? && !include?(true))
+    return true unless block_given? || !our_parameter.nil?
 
     result = false
     if self.class == Array
@@ -100,6 +104,7 @@ module Enumerable
   end
 
   def my_none?(my_parameter = nil)
+    return true if count.zero? || (self[0].nil? && !include?(true))
     return false unless block_given? || !my_parameter.nil?
 
     result = true
@@ -164,21 +169,79 @@ module Enumerable
     new_array
   end
 
-  def my_inject(my_parameter = nil)
-    if !my_parameter.nil?
-      accum = my_parameter
-      my_each do |n|
-        accum = yield(accum, n)
+  def my_inject(symbol = nil, start_value = nil)
+    if symbol.class != Symbol
+      holder = symbol
+      symbol = start_value
+      start_value = holder
+    end
+    initial_value = false
+    initial_value = true unless start_value.nil?
+    value = start_value || first
+    case symbol
+    when :+
+      if !initial_value
+        drop(1).my_each do |x|
+          value += x
+        end
+      else
+        my_each do |x|
+          value += x
+        end
+      end
+    when :*
+      if !initial_value
+        drop(1).my_each do |x|
+          value *= x
+        end
+      else
+        my_each do |x|
+          value *= x
+        end
+      end
+    when :/
+      if !initial_value
+        drop(1).my_each do |x|
+          value /= x
+        end
+      else
+        my_each do |x|
+          value /= x
+        end
+      end
+    when :-
+      if !initial_value
+        drop(1).my_each do |x|
+          value -= x
+        end
+      else
+        my_each do |x|
+          value -= x
+        end
+      end
+    when :**
+      if !initial_value
+        drop(1).my_each do |x|
+          value **= x
+        end
+      else
+        my_each do |x|
+          value **= x
+        end
       end
     else
-      accum = self[0]
-      my_each_with_index do |i|
-        accum = yield(accum, [i + 1]) if i < length - 1
+      if !initial_value
+        drop(1).my_each do |x|
+          value = yield(value, x)
+        end
+      else
+        my_each do |x|
+          value = yield(value, x)
+        end
       end
     end
-    accum
+    value
   end
-  # rubocop:enable` after disabling it.
 end
 
 # Testing my_inject with multiply_els method
@@ -196,3 +259,6 @@ puts
 test_proc = proc { |i| i * 5 }
 test_array = [5, 7, 9, 5]
 puts 'array.my_map(&test_proc) output: ' + test_array.my_map(&test_proc).to_s
+
+
+
