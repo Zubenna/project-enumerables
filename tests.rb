@@ -8,10 +8,14 @@ test_words = %w[cat house tree fan]
 # Tests for #my_each
 puts
 print 'test_array.my_each { |n| n } output: '
-test_array.my_each { |n| print n }
+test_array.my_each { |n| print "#{n}"+' ' }
 puts
+print '[1, 2, 3].each {|num| num} output: '
+p([1, 2, 3].each {|num| num})
+print '[1, 2, 3].my_each {|num| num} output: '
+p([1, 2, 3].my_each {|num| num})
 print 'test_words.my_each { |n| n } output: '
-test_words.my_each { |n| print n }
+test_words.my_each { |n| print "#{n}"+' ' }
 puts
 puts 'test_hash.each { |key, value| puts Key: {key}, Value: {value} } output:'
 test_hash.my_each { |key, value| puts "Key: #{key}, Value: #{value}" }
@@ -19,6 +23,10 @@ puts
 puts
 
 # Tests for #my_each_with_index
+puts'[1, 2, 3].each_with_index {|num| num}'
+p([1, 2, 3].each_with_index {|num| num})  #should return [1, 2, 3]
+puts'[1, 2, 3].my_each_with_index {|num| num}'
+p([1, 2, 3].my_each_with_index {|num| num})  #should return [1, 2, 3]
 puts 'test_array.my_each_with_index do |element, index|
 puts "Index: #{index}, Element:#{element}"
 end output: '
@@ -54,9 +62,15 @@ p(test_words.my_all? { |word| word.length >= 3 })
 puts 'test_words.my_all? { |word| word.length >= 3 } output: '
 p(test_words.my_all? { |word| word.length >= 4 })
 puts 'test_array.all?(3) output: '
-p(test_array.all?(3))
+p(test_array.my_all?(3))
 puts '[].my_all? output: '
 p([].my_all?)
+puts'[1, 2, 3].my_all?'
+p([1, 2, 3].my_all?) #should return true
+p'[1, 2, nil].my_all?'
+p([1, 2, nil].my_all?) #should return false
+p'[1, false, nil].my_all?'
+p([1, false, nil].my_all?) #should return false
 puts
 puts
 # Tests for #my_any?
@@ -90,8 +104,6 @@ puts 'test_array.my_count(5) output: '
 p test_array.my_count(5)
 puts 'test_array.my_count { |n| n <= 6 }'
 p(test_array.my_count { |n| n <= 6 })
-puts 'test_hash.my_count { |key, value| value.odd? } output: '
-p(test_hash.my_count { |_key, value| value.even? })
 puts
 puts
 # Tests for #my_map

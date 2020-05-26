@@ -1,26 +1,12 @@
 module Enumerable
   def my_each
-    return to_enum unless block_given?
-
-    x = 0
-    self_class = self.class
-    array = if self_class == Array
-              self
-            elsif self_class == Range
-              to_a
-            else
-              flatten
-            end
-    while x < array.length
-      if self_class == Hash
-        yield array[x], array[x + 1]
-        x += 2
-      else
-        yield array[x]
-        x += 1
-      end
-    end
-  end
+		i = 0
+		while i < self.length
+			yield self[i]
+			i += 1
+		end
+		self
+	end
 
   def my_each_with_index
     return to_enum unless block_given?
@@ -29,9 +15,10 @@ module Enumerable
     x = 0
     array = self_class == Array ? self : to_a
     while x < array.length
-      yield array[x], x
+      yield self[x], x
       x += 1
     end
+    self
   end
 
   def my_select
@@ -255,7 +242,11 @@ puts
 puts 'multiply_els([2, 4, 5]) output: ' + multiply_els([2, 4, 5]).to_s
 puts
 puts
-# Calling my_map with a proc
-test_proc = proc { |i| i * 5 }
-test_array = [5, 7, 9, 5]
-puts 'array.my_map(&test_proc) output: ' + test_array.my_map(&test_proc).to_s
+
+# Executes only the proc when both a block and a proc are given
+my_proc = Proc.new { |num| num > 10 }
+test_array = [11, 2, 3, 15]
+puts 'array.my_map(&test_proc) output: ' + test_array.my_map(&my_proc).to_s
+
+
+
