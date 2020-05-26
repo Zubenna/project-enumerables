@@ -10,8 +10,6 @@ puts
 print 'test_array.my_each { |n| n } output: '
 test_array.my_each { |n| print n.to_s + ' ' }
 puts
-print '[1, 2, 3].each {|num| num} output: '
-p([1, 2, 3].each { |num| num })
 print '[1, 2, 3].my_each {|num| num} output: '
 p([1, 2, 3].my_each { |num| num })
 print 'test_words.my_each { |n| n } output: '
@@ -21,7 +19,7 @@ puts
 
 # Tests for #my_each_with_index
 print '[1, 2, 3].my_each_with_index { |num| num }: '
-p([1, 2, 3].my_each_with_index { |num| num })# should return [1, 2, 3]
+p([1, 2, 3].my_each_with_index { |num| num }) # should return [1, 2, 3]
 puts 'test_array.my_each_with_index do |element, index|
 puts "Index: #{index}, Element:#{element}"
 end output: '
