@@ -51,33 +51,18 @@ module Enumerable
     my_enumerable
   end
 
-  def my_all?(my_parameter = nil)
-    return true if (self.class == Array && count.zero?) || (!block_given? &&
-        my_parameter.nil? && !include?(nil))
-    return false unless block_given? || !my_parameter.nil?
-
+  def my_all?(*param)
     result = true
-    if self.class == Array
-      my_each do |x|
-        if block_given?
-          result = false unless yield(x)
-        elsif my_parameter.class == Regexp
-          result = false unless x.match(my_parameter)
-        elsif my_parameter.class <= Numeric
-          result = false unless x == my_parameter
-        else
-          result = false unless x.class <= my_parameter
-        end
-        break unless result
-      end
+    if !param[0].nil?
+      my_each { |variable| result = false unless param[0] === variable }
+    elsif !block_given?
+      my_each { |variable| result = false unless variable }
     else
-      my_each do |key, value|
-        result = false unless yield(key, value)
-      end
+      my_each { |variable| result = false unless yield(variable) }
     end
     result
   end
-
+  
   def my_any?(our_parameter = nil)
     return false if (self.class == Array && count.zero?) || (!block_given? &&
     our_parameter.nil? && !include?(true))
@@ -154,20 +139,15 @@ module Enumerable
     my_counter
   end
 
-  def my_map
-    return to_enum unless block_given?
-
-    new_array = []
-    if self.class == Array
-      my_each do |n|
-        new_array << yield(n)
-      end
+  def my_map(my_proc = nil)
+    result_array = []
+    if !my_proc
+      return to_enum unless block_given?
+      my_each { |x| result_array << yield(x) }
     else
-      my_each do |key, value|
-        new_array << yield(key, value)
-      end
+      my_each { |x| result_array << my_proc.call(x) }
     end
-    new_array
+    result_array
   end
 
   def my_inject(*param)
@@ -195,9 +175,8 @@ end
 puts
 puts 'multiply_els([2, 4, 5]) output: ' + multiply_els([2, 4, 5]).to_s
 puts
-puts
 
 # Executes only the proc when both a block and a proc are given
-my_proc = proc { |num| num > 10 }
-test_array = [11, 2, 3, 15]
-puts 'array.my_map(&test_proc) output: ' + test_array.my_map(&my_proc).to_s
+square = proc { |n| n**2 }
+p [1, 2, 3].my_map(square)
+p [1, 2, 3].my_map { |n| n**2 }
