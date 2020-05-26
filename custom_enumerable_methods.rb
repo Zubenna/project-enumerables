@@ -1,11 +1,11 @@
 module Enumerable
   def my_each
-		i = 0
-		while i < self.length
-			yield self[i]
-			i += 1
-		end
-		self
+	  i = 0
+	  while i < length
+		  yield self[i]
+		  i += 1
+	  end
+	  self
 	end
 
   def my_each_with_index
@@ -244,7 +244,7 @@ puts
 puts
 
 # Executes only the proc when both a block and a proc are given
-my_proc = Proc.new { |num| num > 10 }
+my_proc = proc { |num| num > 10 }
 test_array = [11, 2, 3, 15]
 puts 'array.my_map(&test_proc) output: ' + test_array.my_map(&my_proc).to_s
 
