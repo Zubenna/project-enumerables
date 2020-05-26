@@ -54,7 +54,7 @@ module Enumerable
   def my_all?(*param)
     result = true
     if !param[0].nil?
-      my_each { |variable| result = false unless param[0] === variable }
+      my_each { |variable| result = false unless param[0] == variable }
     elsif !block_given?
       my_each { |variable| result = false unless variable }
     else
@@ -62,7 +62,7 @@ module Enumerable
     end
     result
   end
-  
+
   def my_any?(our_parameter = nil)
     return false if (self.class == Array && count.zero?) || (!block_given? &&
     our_parameter.nil? && !include?(true))
@@ -143,6 +143,7 @@ module Enumerable
     result_array = []
     if !my_proc
       return to_enum unless block_given?
+
       my_each { |x| result_array << yield(x) }
     else
       my_each { |x| result_array << my_proc.call(x) }
@@ -178,5 +179,5 @@ puts
 
 # Executes only the proc when both a block and a proc are given
 square = proc { |n| n**2 }
-p [1, 2, 3].my_map(square)
-p [1, 2, 3].my_map { |n| n**2 }
+p([1, 2, 3].my_map(square))
+p([1, 2, 3].my_map { |n| n**2 })
