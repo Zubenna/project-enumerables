@@ -1,9 +1,23 @@
 module Enumerable
   def my_each
+    return to_enum unless block_given?
+
     x = 0
+    array = if self.class == Array
+              self
+            elsif self.class == Range
+              to_a
+            else
+              flatten
+            end
     while x < length
-      yield self[x]
-      x += 1
+      if self.class == Hash
+        yield(array[x], array[x + 1])
+        x += 2
+      else
+        yield self[x]
+        x += 1
+      end
     end
     self
   end
@@ -156,78 +170,18 @@ module Enumerable
     new_array
   end
 
-  def my_inject(symbol = nil, start_value = nil)
-    if symbol.class != Symbol
-      holder = symbol
-      symbol = start_value
-      start_value = holder
+  def my_inject(*param)
+    array = is_a?(Range) ? to_a : self
+
+    result = param[0] if param[0].is_a?(Integer)
+    operator = param[0].is_a?(Symbol) ? param[0] : param[1]
+
+    if operator
+      array.my_each { |item| result = result ? result.send(operator, item) : item}
+      return result
     end
-    initial_value = false
-    initial_value = true unless start_value.nil?
-    value = start_value || first
-    case symbol
-    when :+
-      if !initial_value
-        drop(1).my_each do |x|
-          value += x
-        end
-      else
-        my_each do |x|
-          value += x
-        end
-      end
-    when :*
-      if !initial_value
-        drop(1).my_each do |x|
-          value *= x
-        end
-      else
-        my_each do |x|
-          value *= x
-        end
-      end
-    when :/
-      if !initial_value
-        drop(1).my_each do |x|
-          value /= x
-        end
-      else
-        my_each do |x|
-          value /= x
-        end
-      end
-    when :-
-      if !initial_value
-        drop(1).my_each do |x|
-          value -= x
-        end
-      else
-        my_each do |x|
-          value -= x
-        end
-      end
-    when :**
-      if !initial_value
-        drop(1).my_each do |x|
-          value **= x
-        end
-      else
-        my_each do |x|
-          value **= x
-        end
-      end
-    else
-      if !initial_value
-        drop(1).my_each do |x|
-          value = yield(value, x)
-        end
-      else
-        my_each do |x|
-          value = yield(value, x)
-        end
-      end
-    end
-    value
+    array.my_each { |item| result = result ? yield(result, item) : item }
+    result
   end
 end
 
