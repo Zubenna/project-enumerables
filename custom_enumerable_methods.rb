@@ -1,12 +1,12 @@
 module Enumerable
   def my_each
-	  i = 0
-	  while i < length
-		  yield self[i]
-		  i += 1
-	  end
-	  self
-	end
+    x = 0
+    while x < length
+      yield self[x]
+      x += 1
+    end
+    self
+  end
 
   def my_each_with_index
     return to_enum unless block_given?
@@ -247,6 +247,3 @@ puts
 my_proc = proc { |num| num > 10 }
 test_array = [11, 2, 3, 15]
 puts 'array.my_map(&test_proc) output: ' + test_array.my_map(&my_proc).to_s
-
-
-
