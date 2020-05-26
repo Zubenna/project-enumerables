@@ -114,8 +114,3 @@ longest_word = test_words.inject do |memo, word|
   memo.length > word.length ? memo : word
 end
 p longest_word
-
-
-
-#rubocop:disable Metrics/CyclomaticComplexity
-# rubocop:enable Metrics/CyclomaticComplexity

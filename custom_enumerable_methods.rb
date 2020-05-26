@@ -177,7 +177,7 @@ module Enumerable
     operator = param[0].is_a?(Symbol) ? param[0] : param[1]
 
     if operator
-      array.my_each { |item| result = result ? result.send(operator, item) : item}
+      array.my_each { |item| result = result ? result.send(operator, item) : item }
       return result
     end
     array.my_each { |item| result = result ? yield(result, item) : item }
