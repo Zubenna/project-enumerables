@@ -54,6 +54,10 @@ module Enumerable
   def my_all?(pattern = false)
     if block_given?
       my_each { |item| return false if !(yield item).nil? == false }
+    elsif pattern.class == Class 
+      my_each { |x| return false unless x.is_a? pattern }
+    elsif pattern.class == Regexp
+      my_each { |x| return false unless x.match? pattern }
     elsif !pattern.nil? == true
       my_each { |item| return false if (pattern === item) == false }
     else
@@ -180,3 +184,8 @@ puts
 square = proc { |n| n**2 }
 p([1, 2, 3].my_map(square))
 p([1, 2, 3].my_map { |n| n**2 })
+
+p([1, 2, 3, 4].my_all?(Integer)) # should return true
+p(%w[dog, door, doll].my_all?(/d/)) # should return true
+p([1, 2, false].my_all?)
+
