@@ -55,9 +55,9 @@ module Enumerable
     if block_given?
       my_each { |item| return false if !(yield item).nil? == false }
     elsif !pattern.nil? == true
-      my_each{ |item| return false if (pattern === item) == false }
+      my_each { |item| return false if (pattern === item) == false }
     else
-      my_each{ |item| return false if !item.nil? == false }
+      my_each { |item| return false if !item.nil? == false }
     end
     true
   end
@@ -180,7 +180,3 @@ puts
 square = proc { |n| n**2 }
 p([1, 2, 3].my_map(square))
 p([1, 2, 3].my_map { |n| n**2 })
-
-p([1, 2, false].my_all?) # It should return false
-p([1, 2, 3, 4].my_all?(Integer)) # should return true
-p(%w[dog, door, doll].my_all?(/d/)) # should return true
