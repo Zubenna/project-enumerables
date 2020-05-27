@@ -51,16 +51,15 @@ module Enumerable
     my_enumerable
   end
 
-  def my_all?(*param)
-    result = true
-    if !param[0].nil?
-      my_each { |variable| result = false unless param[0] == variable }
-    elsif !block_given?
-      my_each { |variable| result = false unless variable }
+  def my_all? (pattern = false)
+    if block_given?
+      self.my_each{|item| return false if !!(yield item) == false}
+    elsif !!pattern == true
+      self.my_each{|item| return false if (pattern === item) == false}
     else
-      my_each { |variable| result = false unless yield(variable) }
+      self.my_each{|item| return false if !!item == false}
     end
-    result
+    true
   end
 
   def my_any?(our_parameter = nil)
