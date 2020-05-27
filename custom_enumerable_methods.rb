@@ -54,14 +54,14 @@ module Enumerable
   def my_all?(pattern = nil)
     if block_given?
       my_each { |item| return false unless yield item }
-    elsif pattern.class == Class 
+    elsif pattern.class == Class
       my_each { |x| return false unless x.is_a? pattern }
     elsif pattern.class == Regexp
       my_each { |x| return false unless x.match? pattern }
     elsif pattern
       my_each { |item| return false if (pattern === item) == false }
     else
-      my_each { |item| return false if item.nil? || !item  }
+      my_each { |item| return false if item.nil? || !item }
     end
     true
   end
