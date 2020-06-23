@@ -3,7 +3,8 @@ describe Enumerable do
   let(:test_array) { [5, 7, 9, 5] }
   let(:test_hash) { { w: 3, x: 4, y: 2, z: 6 } }
   let(:test_words) { %w[cat house tree fan] }
-  let(:array_with_nil) { [5, nil, 9] }
+  let(:array_with_nil) { [5, nil, true] }
+  let(:array_falses) { [nil, false, nil] }
   # let(:extended_class) { Class.new { extend Enumerable } }
   # w: 3, x: 4, y: 2, z: 6
 
@@ -78,8 +79,28 @@ describe Enumerable do
         expect(test_array.any?).to(eq(true))      #there´s an error in enumerable_method code !!!!!!!!!!!!!!!!<-------- check!
       end
       it "should return true if all items match the RegExp condition" do
-        expect(test_words.all?(/t/)).to eq(test_words.my_all?(/t/)) #\d is used to find a tab character
+        expect(test_words.all?(/t/)).to eq(test_words.my_all?(/t/)) #\t is used to find a tab character
+      end
+    end
+  end
+
+  describe "#my_none?" do
+    it "should return true if the block never returns true for all items" do
+      expect(test_words.my_any? { |i| i.length >= 10 }).to eq(false)
+    end
+    describe "When a block is not given, and" do
+      describe "there´s not argument" do
+        it "should return true if none of the collection members is true" do
+          expect(array_falses.my_none?).to be(true)
+        end
+      end
+      it "should return true if none items match the RegExp condition" do
+        expect(test_words.my_none?(/d/)).to be(true) #\d is used to find a digit
       end
     end
   end
 end
+#---------commits
+# describe "#count" do
+# it "should count "
+# end
