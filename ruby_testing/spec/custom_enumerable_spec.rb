@@ -29,4 +29,17 @@ describe Enumerable do
       expect(test_array.my_each).to be_a(Enumerable)
     end
   end
+  describe "#my_select" do
+    it "Should return an enum when no block is given" do
+      expect(test_array.my_select).to be_a(Enumerable)
+    end
+    it "Returns an array with all elements for which the given block returns a true value" do
+      expect(test_array.my_select { |i| i.positive? }).to eql([5, 7, 9, 5])
+    end
+    it "Returns an array with all even elements" do
+      expect(test_array.my_select { |i| i.even? }).to eq([])
+    end
+    it "should return an array with the value(s) which matches the condition on the block" do
+      expect(test_words.my_select { |i| i == "house" }).to eq(["house"])
+  end
 end
