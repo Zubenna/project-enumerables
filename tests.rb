@@ -15,6 +15,7 @@ p([1, 2, 3].my_each { |num| num })
 print 'test_words.my_each { |n| n } output: '
 test_words.my_each { |n| print n.to_s + ' ' }
 puts
+test_hash.my_each { |key, value| puts "Key: #{key}, Value: #{value}" }
 puts
 
 # Tests for #my_each_with_index
