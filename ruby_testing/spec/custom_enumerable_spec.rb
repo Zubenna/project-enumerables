@@ -106,9 +106,10 @@ describe Enumerable do
     end
     describe 'if arguments are no given' do
       it 'should count the items inside the enum' do
-        expect(test_hash).to eq(4)
+        expect(test_hash.count).to eq(4)
       end
       it 'should count the matches inside enum that satisfies the block provided' do
+        expect(test_words.count { |i| i != 'apple' }).to eq(4)
       end
     end
   end
