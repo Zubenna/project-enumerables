@@ -99,8 +99,12 @@ describe Enumerable do
       end
     end
   end
+
+  describe "#count" do
+    it "should count the matches in the enum that are equal to the argument given" do
+      expect(test_array.count(5)).to eq(2)
+    end
+  end
 end
-#---------commits
-# describe "#count" do
-# it "should count "
-# end
+
+
