@@ -19,6 +19,11 @@ let(:test_words) { %w[cat house tree fan] }
       it "prints all the key value pair in a hash" do
         expect{test_hash.my_each { |key, value|  puts "Key: #{key}, Value: #{value}" } }.to output("Key: w, Value: 3\nKey: x, Value: 4\nKey: y, Value: 2\nKey: z, Value: 6\n" ).to_stdout
       end
+      it "Should return an enum when no block is given" do
+        let new_array = []
+        
+        expect(test_array.my_each).to be_a(Enumerable)
+     end
     end
 
     describe '#my_each_with_index' do
