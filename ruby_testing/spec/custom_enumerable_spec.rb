@@ -30,6 +30,11 @@ describe Enumerable do
     it 'Should return an enum when no block is given' do
       expect(test_array.my_each).to be_a(Enumerable)
     end
+    it 'should work with all of the three values: key, value and index' do
+      output = ''
+      test_hash.my_each_with_index { |key, value, i| output += key.to_s + value.to_s + i.to_s }
+      expect(print(output)).to eql(print('[:w, 3]0[:x, 4]1[:y, 2]2[:z, 6]3'))
+    end
   end
 
   describe '#my_select' do
@@ -47,7 +52,7 @@ describe Enumerable do
     end
   end
 
-  describe '#my_all' do
+  describe '#my_all?' do
     it 'should return true if the condition of the block never returns false or nil' do
       expect(test_words.all? { |i| i.length > 2 }).to eq(test_words.my_all? { |i| i.length > 2 }) # compares to built-in #all?
     end
@@ -67,7 +72,7 @@ describe Enumerable do
     end
   end
 
-  describe '#my_any' do
+  describe '#my_any?' do
     it 'should return true if the condition of the block ever returns other value than false or nil' do
       expect(test_words.my_any? { |i| i.length >= 5 }).to eq(true)
     end
@@ -100,7 +105,7 @@ describe Enumerable do
     end
   end
 
-  describe '#count' do
+  describe '#my_count' do
     it 'should count the matches in the enum that are equal to the argument given' do
       expect(test_array.count(5)).to eq(2)
     end
