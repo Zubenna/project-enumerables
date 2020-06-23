@@ -3,6 +3,7 @@ describe Enumerable do
   let(:test_array) { [5, 7, 9, 5] }
   let(:test_hash) { { w: 3, x: 4, y: 2, z: 6 } }
   let(:test_words) { %w[cat house tree fan] }
+  # let(:all_true)
   # let(:extended_class) { Class.new { extend Enumerable } }
   # w: 3, x: 4, y: 2, z: 6
 
@@ -29,6 +30,7 @@ describe Enumerable do
       expect(test_array.my_each).to be_a(Enumerable)
     end
   end
+
   describe "#my_select" do
     it "Should return an enum when no block is given" do
       expect(test_array.my_select).to be_a(Enumerable)
@@ -41,5 +43,12 @@ describe Enumerable do
     end
     it "should return an array with the value(s) which matches the condition on the block" do
       expect(test_words.my_select { |i| i == "house" }).to eq(["house"])
+    end
+  end
+
+  describe "my_all" do
+    it "should return true if the block never returns false or nil" do
+      expect(test_words.all? { |i| i.length > 2 }).to eql(test_words.my_all? { |i| i.length > 2 })
+    end
   end
 end
