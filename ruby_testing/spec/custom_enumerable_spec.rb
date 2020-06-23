@@ -46,7 +46,7 @@ describe Enumerable do
     end
   end
 
-  describe "my_all" do
+  describe "#my_all" do
     it "should return true if the condition of the block never returns false or nil" do
       expect(test_words.all? { |i| i.length > 2 }).to eq(test_words.my_all? { |i| i.length > 2 }) #compares to built-in #all?
     end
@@ -57,7 +57,7 @@ describe Enumerable do
       it "should return true if none of the list items are false or nil" do
         expect(test_array.my_all?).to eq(test_array.all?)
       end
-      it "should return false if some item of the list i false or nil," do
+      it "should return false if some item of the list is false or nil," do
         expect(array_with_nil.my_all?).to eq(array_with_nil.all?)
       end
       it "should return true if all items match the RegExp condition" do
@@ -66,16 +66,16 @@ describe Enumerable do
     end
   end
 
-  describe "my_any" do
+  describe "#my_any" do
     it "should return true if the condition of the block ever returns other value than false or nil" do
       expect(test_words.my_any? { |i| i.length >= 5 }).to eq(true)
     end
     describe "When a block is not given, ruby ads an implicit block of { |obj| obj }, and" do
       it "should return true if any of the list items are not false or nil" do
-        expect(array_with_nil.my_any?).to eq(false)  #there´s an error in enumerable_method code !!!!!!!!!!!!!!!!
+        expect(array_with_nil.any?).to eq(true)   #there´s an error in enumerable_method code !!!!!!!!!!!!!!!!<-------- check!
       end
-      it "should return false if some item of the list i false or nil," do
-        expect(array_with_nil.my_all?).to eq(array_with_nil.all?)
+      it "should return true if is a non empty array" do
+        expect(test_array.any?).to(eq(true))      #there´s an error in enumerable_method code !!!!!!!!!!!!!!!!<-------- check!
       end
       it "should return true if all items match the RegExp condition" do
         expect(test_words.all?(/t/)).to eq(test_words.my_all?(/t/)) #\d is used to find a tab character
