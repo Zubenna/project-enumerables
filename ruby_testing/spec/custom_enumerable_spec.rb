@@ -1,28 +1,28 @@
-require "../custom_enumerable_methods"
+require '../custom_enumerable_methods'
 describe Enumerable do
   let(:test_array) { [5, 7, 9, 5] }
   let(:test_hash) { { w: 3, x: 4, y: 2, z: 6 } }
   let(:test_words) { %w[cat house tree fan] }
   let(:array_with_nil) { [5, nil, true] }
   let(:array_falses) { [nil, false, nil] }
- 
-  describe "#my_each" do
-    it "prints all the elements of an integer array" do
+
+  describe '#my_each' do
+    it 'prints all the elements of an integer array' do
       expect { test_array.my_each { |item| print item } }.to output("5795").to_stdout
     end
-    it "Should return an enum when no block is given" do
+    it 'Should return an enum when no block is given' do
       expect(test_array.my_each).to be_a(Enumerable)
     end
-    it "prints all the elements of words array" do
-      expect { test_words.my_each { |item| print item } }.to output("cathousetreefan").to_stdout
+    it 'prints all the elements of words array' do
+      expect { test_words.my_each { |item| print item } }.to output('cathousetreefan').to_stdout
     end
-    it "prints all the key value pair in a hash" do
+    it 'prints all the key value pair in a hash' do
       expect { test_hash.my_each { |key, value| puts "Key: #{key}, Value: #{value}" } }.to output("Key: w, Value: 3\nKey: x, Value: 4\nKey: y, Value: 2\nKey: z, Value: 6\n").to_stdout
     end
-    it "Pass test if test_array and new_array are equal" do
+    it 'Pass test if test_array and new_array are equal' do
       new_array = []
       test_array.my_each { |x| new_array << x }
-      expect(test_array).to eq (new_array)
+      expect{(test_array).to eq (new_array)}
     end
   end
 
