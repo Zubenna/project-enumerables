@@ -130,12 +130,29 @@ describe Enumerable do
       expect(test_array.my_select).to be_a(Enumerable)
     end
     it 'Should return an array with results of the block called on the enum' do
-      expect(test_array.my_map { |i| i / 3}).to eql([1, 2, 3, 1])
+      expect(test_array.my_map { |i| i / 3 }).to eql([1, 2, 3, 1])
     end
   end
 
   describe '#my_inject' do
-    
+    describe 'when a block is given' do
+      it 'should return an accumulator of the enum\'s elements combined with a binary operation' do
+        # block = Proc.new { |memo, i| memo.length > i.length ? memo : i } # with proc
+        block = ->(memo, i) { memo.length > i.length ? memo : i } # with lambda
+        expect(test_words.my_inject(&block)).to eq('house')
+      end
+      it 'Should return an accumulator of the enum\'s elements combined if an initial value is passed' do
+      expect(test_array.my_inject(3) { |memo, i| memo * i }).to eq(4725)
+      end
+    end
+    describe 'when not block is given' do
+      it 'should return an accumulator of the enum\'s elements combined with the binary operation as a symbol' do
+        expect(test_array.my_inject(:+)).to eq(26)
+      end
+      it 'Should return an accumulator of the enum\'s elements combined if an initial value and a symbol are passed' do
+        expect(test_array.my_inject(100, :+)).to eq(126)
+      end
+    end
   end
 
 end
