@@ -93,6 +93,7 @@ describe Enumerable do
         expect(test_words.my_all?(/d/)).to eq(false)
       end
     end
+  end
 
   describe '#my_none?' do
     it 'should return true if the block never returns true for all items' do
@@ -128,10 +129,13 @@ describe Enumerable do
     it 'Should return an enum when no block is given' do
       expect(test_array.my_select).to be_a(Enumerable)
     end
-    
+    it 'Should return an array with results of the block called on the enum' do
+      expect(test_array.my_map { |i| i / 3}).to eql([1, 2, 3, 1])
+    end
   end
 
   describe '#my_inject' do
     
   end
+
 end
