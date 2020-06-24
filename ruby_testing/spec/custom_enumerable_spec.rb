@@ -42,6 +42,15 @@ describe Enumerable do
     end
   end
 
+  describe '#my_map' do
+    it "prints array whose elements are multiplied by 10" do
+    # let(:test_array) { [5, 7, 9, 5] }
+    # new_array = test_array.map { |n| n * 10 }
+    expect{ print{test_array.map { |n| n * 10 }}}.to output('[50, 70, 90, 50]').to_stdout
+    end
+    # p(test_array.map { |n| n * 10 })
+  end
+
   describe '#my_select' do
     it 'Should return an enum when no block is given' do
       expect(test_array.my_select).to be_a(Enumerable)
