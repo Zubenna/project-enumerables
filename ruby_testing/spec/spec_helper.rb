@@ -74,10 +74,10 @@ RSpec.configure do |config|
   # file, and it's useful to allow more verbose output when running an
   # individual spec file.
   # if config.files_to_run.one?
-    # Use the documentation formatter for detailed output,
-    # unless a formatter has already been configured
-    # (e.g. via a command-line flag).
-    # config.default_formatter = 'doc'
+  # Use the documentation formatter for detailed output,
+  # unless a formatter has already been configured
+  # (e.g. via a command-line flag).
+  # config.default_formatter = 'doc'
   # end
 
   # Print the 10 slowest examples and example groups at the
@@ -95,6 +95,6 @@ RSpec.configure do |config|
   # Setting this allows you to use `--seed` to deterministically reproduce
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
-  # Kernel.srand config.seed
+# Kernel.srand config.seed
 # =end
 end
