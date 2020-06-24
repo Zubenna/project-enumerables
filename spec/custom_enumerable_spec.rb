@@ -1,4 +1,4 @@
-require '../custom_enumerable_methods'
+require_relative '../custom_enumerable_methods'
 describe Enumerable do
   let(:test_array) { [5, 7, 9, 5] }
   let(:test_hash) { { w: 3, x: 4, y: 2, z: 6 } }
