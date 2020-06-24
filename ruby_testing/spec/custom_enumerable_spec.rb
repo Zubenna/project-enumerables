@@ -74,7 +74,7 @@ describe Enumerable do
       it 'should return true if all items match the RegExp condition' do
         expect(test_words.all?(/t/)).to eq(test_words.my_all?(/t/)) # \d is used to find a tab character
       end
-      
+
     end
   end
 
@@ -84,7 +84,7 @@ describe Enumerable do
     end
     describe "When a block is not given, ruby ads an implicit block of { |obj| obj }, and" do
       it "should return true if any of the listed items meet the criteria" do
-        expect(array_with_nil.my_any?).to eq(true) 
+        expect(array_with_nil.my_any?).to eq(true)
       end
       it "should return false if called on an empty array" do
         expect([].my_any?).to eq(false)
@@ -123,5 +123,15 @@ describe Enumerable do
       end
     end
   end
- end
+
+  describe '#my_map' do
+    it 'Should return an enum when no block is given' do
+      expect(test_array.my_select).to be_a(Enumerable)
+    end
+    
+  end
+
+  describe '#my_inject' do
+    
+  end
 end
