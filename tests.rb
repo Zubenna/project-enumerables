@@ -116,8 +116,7 @@ longest_word = test_words.inject do |memo, word|
 end
 p longest_word
 
-
-#!/usr/bin/env ruby
+# !/usr/bin/env ruby
 # frozen_string_literal: true
 
 # This module contains an implementation of some of the methods found in the
