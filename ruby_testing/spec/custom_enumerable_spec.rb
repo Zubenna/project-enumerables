@@ -3,7 +3,7 @@ describe Enumerable do
   let(:test_array) { [5, 7, 9, 5] }
   let(:test_hash) { { w: 3, x: 4, y: 2, z: 6 } }
   let(:test_words) { %w[cat house tree fan] }
-  let(:array_with_nil) { [5, nil, 9] }
+  let(:array_with_nil) { [nil, true, 99] }
   # let(:extended_class) { Class.new { extend Enumerable } }
   # w: 3, x: 4, y: 2, z: 6
 
@@ -20,15 +20,28 @@ describe Enumerable do
     it "prints all the key value pair in a hash" do
       expect { test_hash.my_each { |key, value| puts "Key: #{key}, Value: #{value}" } }.to output("Key: w, Value: 3\nKey: x, Value: 4\nKey: y, Value: 2\nKey: z, Value: 6\n").to_stdout
     end
+    it "Pass test if test_array and new_array are equal" do
+      new_array = []
+      test_array.my_each { |x| new_array << x }
+      expect(test_array).to eq (new_array)
+    end
   end
 
   describe "#my_each_with_index" do
-    it "prints an integer array" do
-      expect { print(test_array.my_each_with_index { |num| num }) }.to output("[5, 7, 9, 5]").to_stdout
-    end
     it "Should return an enum when no block is given" do
-      expect(test_array.my_each).to be_a(Enumerable)
+      expect( test_array.my_each_with_index).to be_a(Enumerable)
     end
+
+    it "Prints array elements with its index" do
+      expect { test_array.my_each_with_index { |element, index| puts "Index: #{index}, Element: #{element}" } }.to output("Index: 0, Element: 5\nIndex: 1, Element: 7\nIndex: 2, Element: 9\nIndex: 3, Element: 5\n").to_stdout
+    end
+
+    it "Prints a hash with index and key value pair" do
+      output = ""
+      test_hash.my_each_with_index { |key, value, i| output += key.to_s + value.to_s + i.to_s }
+      expect(print output).to eql(print "[:w, 3]0[:x, 4]1[:y, 2]2[:z, 6]3")
+    end
+      
   end
 
   describe "#my_select" do
@@ -63,11 +76,7 @@ describe Enumerable do
       it "should return true if all items match the RegExp condition" do
         expect(test_words.all?(/t/)).to eq(test_words.my_all?(/t/)) #\d is used to find a tab character
       end
-      it "Should return an enum when no block is given" do
-        let new_array = []
-        
-        expect(test_array.my_each).to be_a(Enumerable)
-     end
+      
     end
   end
 
@@ -76,14 +85,14 @@ describe Enumerable do
       expect(test_words.my_any? { |i| i.length >= 5 }).to eq(true)
     end
     describe "When a block is not given, ruby ads an implicit block of { |obj| obj }, and" do
-      it "should return true if any of the list items are not false or nil" do
-        expect(array_with_nil.any?).to eq(true)   #there´s an error in enumerable_method code !!!!!!!!!!!!!!!!<-------- check!
+      it "should return true if any of the listed items meet the criteria" do
+        expect(array_with_nil.my_any?).to eq(true) 
       end
-      it "should return true if is a non empty array" do
-        expect(test_array.any?).to(eq(true))      #there´s an error in enumerable_method code !!!!!!!!!!!!!!!!<-------- check!
+      it "should return false if called on an empty array" do
+        expect([].my_any?).to eq(false)
       end
-      it "should return true if all items match the RegExp condition" do
-        expect(test_words.all?(/t/)).to eq(test_words.my_all?(/t/)) #\d is used to find a tab character
+      it "should return false if no array element match the RegExp condition" do
+        expect(test_words.my_all?(/d/)).to eq(false)
       end
     end
   end
