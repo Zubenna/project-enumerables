@@ -79,70 +79,70 @@ describe Enumerable do
     it 'should return true if the condition of the block ever returns other value than false or nil' do
       expect(test_words.my_any? { |i| i.length >= 5 }).to eq(true)
     end
-    describe "When a block is not given, ruby ads an implicit block of { |obj| obj }, and" do
-      it "should return true if any of the listed items meet the criteria" do
+    describe 'When a block is not given, ruby ads an implicit block of { |obj| obj }, and' do
+      it 'should return true if any of the listed items meet the criteria' do
         expect(array_with_nil.my_any?).to eq(true)
       end
-      it "should return false if called on an empty array" do
+      it 'should return false if called on an empty array' do
         expect([].my_any?).to eq(false)
       end
-      it "should return false if no array element match the RegExp condition" do
+      it 'should return false if no array element match the RegExp condition' do
         expect(test_words.my_all?(/d/)).to eq(false)
       end
     end
   end
 
-  describe "#my_none?" do
-    it "should return true if the block never returns true for all items" do
+  describe '#my_none?' do
+    it 'should return true if the block never returns true for all items' do
       expect(test_words.my_any? { |i| i.length >= 10 }).to eq(false)
     end
-    describe "When a block is not given, and" do
-      describe "there´s not argument" do
-        it "should return true if none of the collection members is true" do
+    describe 'When a block is not given, and' do
+      describe 'there´s not argument' do
+        it 'should return true if none of the collection members is true' do
           expect(array_falses.my_none?).to be(true)
         end
       end
-      it "should return true if none items match the RegExp condition" do
+      it 'should return true if none items match the RegExp condition' do
         expect(test_words.my_none?(/d/)).to be(true)
       end
     end
   end
 
-  describe "#my_count" do
-    it "should count the matches in the enum that are equal to the argument given" do
+  describe '#my_count' do
+    it 'should count the matches in the enum that are equal to the argument given' do
       expect(test_array.count(5)).to eq(2)
     end
-    describe "if arguments are no given" do
-      it "should count the items inside the enum" do
+    describe 'if arguments are no given' do
+      it 'should count the items inside the enum' do
         expect(test_hash.count).to eq(4)
       end
-      it "should count the matches inside enum that satisfies the block provided" do
-        expect(test_words.count { |i| i != "apple" }).to eq(4)
+      it 'should count the matches inside enum that satisfies the block provided' do
+        expect(test_words.count { |i| i != 'apple' }).to eq(4)
       end
     end
   end
 
-  describe "#my_map" do
-    it "Should return an enum when no block is given" do
+  describe '#my_map' do
+    it 'Should return an enum when no block is given' do
       expect(test_array.my_select).to be_a(Enumerable)
     end
-    it "Should return an array with results of the block called on the enum" do
+    it 'Should return an array with results of the block called on the enum' do
       expect(test_array.my_map { |i| i / 3 }).to eq([1, 2, 3, 1])
     end
   end
 
-  describe "#my_inject" do
-    describe "when a block is given" do
+  describe '#my_inject' do
+    describe 'when a block is given' do
       it 'should return an accumulator of the enum\'s elements combined with a binary operation' do
         # block = Proc.new { |memo, i| memo.length > i.length ? memo : i } # with proc
         block = ->(memo, i) { memo.length > i.length ? memo : i } # with lambda
-        expect(test_words.my_inject(&block)).to eq("house")
+        expect(test_words.my_inject(&block)).to eq('house')
       end
       it 'Should return an accumulator of the enum\'s elements combined if an initial value is passed' do
         expect(test_array.my_inject(3) { |memo, i| memo * i }).to eq(4725)
       end
     end
-    describe "when not block is given" do
+    describe 'when not block is given' do
       it 'should return an accumulator of the enum\'s elements combined with the binary operation as a symbol' do
         expect(test_array.my_inject(:+)).to eq(26)
       end
