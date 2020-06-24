@@ -93,7 +93,11 @@ RSpec.configure do |config|
 
   # Seed global randomization in this process using the `--seed` CLI option.
   # Setting this allows you to use `--seed` to deterministically reproduce
+<<<<<<< HEAD
     # test failures related to randomization by passing the same `--seed` value
+=======
+  # test failures related to randomization by passing the same `--seed` value
+>>>>>>> b8080627654955dd72e9785cfbfbdc90e4ac3768
   # as the one that triggered the failure.
   # Kernel.srand config.seed
 end
