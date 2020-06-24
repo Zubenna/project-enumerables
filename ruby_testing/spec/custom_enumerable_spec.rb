@@ -8,7 +8,7 @@ describe Enumerable do
 
   describe '#my_each' do
     it 'prints all the elements of an integer array' do
-      expect { test_array.my_each { |item| print item } }.to output("5795").to_stdout
+      expect { test_array.my_each { |item| print item } }.to output('5795').to_stdout
     end
     it 'Should return an enum when no block is given' do
       expect(test_array.my_each).to be_a(Enumerable)
@@ -22,61 +22,61 @@ describe Enumerable do
     it 'Pass test if test_array and new_array are equal' do
       new_array = []
       test_array.my_each { |x| new_array << x }
-      expect{(test_array).to eq (new_array)}
+      expect { test_array.to eq new_array }
     end
   end
 
-  describe "#my_each_with_index" do
-    it "prints an integer array" do
-      expect { print(test_array.my_each_with_index { |num| num }) }.to output("[5, 7, 9, 5]").to_stdout
+  describe '#my_each_with_index' do
+    it 'prints an integer array' do
+      expect { print(test_array.my_each_with_index { |num| num }) }.to output('[5, 7, 9, 5]').to_stdout
     end
-    it "Should return an enum when no block is given" do
+    it 'Should return an enum when no block is given' do
       expect(test_array.my_each).to be_a(Enumerable)
     end
-    it "should work with all of the three values: key, value and index" do
-      output = ""
+    it 'should work with all of the three values: key, value and index' do
+      output = ''
       test_hash.my_each_with_index { |key, value, i| output += key.to_s + value.to_s + i.to_s }
-      expect(print(output)).to eq(print("[:w, 3]0[:x, 4]1[:y, 2]2[:z, 6]3"))
+      expect(print(output)).to eq(print('[:w, 3]0[:x, 4]1[:y, 2]2[:z, 6]3'))
     end
   end
 
-  describe "#my_select" do
-    it "Should return an enum when no block is given" do
+  describe '#my_select' do
+    it 'Should return an enum when no block is given' do
       expect(test_array.my_select).to be_a(Enumerable)
     end
-    it "Returns an array with all elements for which the given block returns a true value" do
+    it 'Returns an array with all elements for which the given block returns a true value' do
       expect(test_array.my_select(&:positive?)).to eq([5, 7, 9, 5])
     end
-    it "Returns an array with all even elements" do
+    it 'Returns an array with all even elements' do
       expect(test_array.my_select(&:even?)).to eq([])
     end
-    it "should return an array with the value(s) which matches the condition within the block" do
-      expect(test_words.my_select { |i| i == "house" }).to eq(["house"])
+    it 'should return an array with the value(s) which matches the condition within the block' do
+      expect(test_words.my_select { |i| i == 'house' }).to eq(['house'])
     end
   end
 
-  describe "#my_all?" do
-    it "should return true if the condition of the block never returns false or nil" do
+  describe '#my_all?' do
+    it 'should return true if the condition of the block never returns false or nil' do
       expect(test_words.all? { |i| i.length > 2 }).to eq(test_words.my_all? { |i| i.length > 2 }) # compares to built-in #all?
     end
-    it "should return true if all items match the condition within the block" do
+    it 'should return true if all items match the condition within the block' do
       expect(test_array.my_all?(&:positive?)).to be(true)
     end
-    describe "When a block is not given, ruby ads an implicit block of { |obj| obj }, and" do
-      it "should return true if none of the list items are false or nil" do
+    describe 'When a block is not given, ruby ads an implicit block of { |obj| obj }, and' do
+      it 'should return true if none of the list items are false or nil' do
         expect(test_array.my_all?).to eq(test_array.all?)
       end
-      it "should return false if some item of the list is false or nil," do
+      it 'should return false if some item of the list is false or nil' do
         expect(array_with_nil.my_all?).to eq(array_with_nil.all?)
       end
-      it "should return true if all items match the RegExp condition" do
-        expect(test_words.all?(/t/)).to eq(test_words.my_all?(/t/)) 
+      it 'should return true if all items match the RegExp condition' do
+        expect(test_words.all?(/t/)).to eq(test_words.my_all?(/t/))
       end
     end
   end
 
-  describe "#my_any" do
-    it "should return true if the condition of the block ever returns other value than false or nil" do
+  describe '#my_any' do
+    it 'should return true if the condition of the block ever returns other value than false or nil' do
       expect(test_words.my_any? { |i| i.length >= 5 }).to eq(true)
     end
     describe "When a block is not given, ruby ads an implicit block of { |obj| obj }, and" do
