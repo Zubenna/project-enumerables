@@ -1,25 +1,26 @@
 module Enumerable
+
   def my_each
     return to_enum unless block_given?
 
     x = 0
-    self_class = self.class
     array = if self.class == Array
               self
-            elsif self_class == Range
+            elsif self.class == Range
               to_a
             else
               flatten
             end
     while x < array.length
-      if self_class == Hash
+      if self.class == Hash
         yield(array[x], array[x + 1])
         x += 2
       else
-        yield(array[x])
+        yield self[x]
         x += 1
       end
     end
+    self
   end
 
   def my_each_with_index

@@ -24,6 +24,10 @@ describe Enumerable do
       test_array.my_each { |x| new_array << x }
       expect { test_array.to eq new_array }
     end
+    it 'It pass test when a given block' do
+      block = proc { |num| num < 4 }
+      expect(test_array.my_each(&block)).to eq(test_array.each(&block))
+    end
   end
 
   describe '#my_each_with_index' do
