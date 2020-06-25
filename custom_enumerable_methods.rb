@@ -10,7 +10,7 @@ module Enumerable
             else
               flatten
             end
-    while x < length
+    while x < array.length
       if self.class == Hash
         yield(array[x], array[x + 1])
         x += 2
@@ -176,11 +176,11 @@ def multiply_els(arr)
   end
 end
 
-puts
-puts 'multiply_els([2, 4, 5]) output: ' + multiply_els([2, 4, 5]).to_s
-puts
+# puts
+# puts 'multiply_els([2, 4, 5]) output: ' + multiply_els([2, 4, 5]).to_s
+# puts
 
 # Executes only the proc when both a block and a proc are given
 square = proc { |n| n**2 }
-p([1, 2, 3].my_map(square))
-p([1, 2, 3].my_map { |n| n**2 })
+# p([1, 2, 3].my_map(square))
+# p([1, 2, 3].my_map { |n| n**2 })

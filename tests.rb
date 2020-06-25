@@ -15,6 +15,7 @@ p([1, 2, 3].my_each { |num| num })
 print 'test_words.my_each { |n| n } output: '
 test_words.my_each { |n| print n.to_s + ' ' }
 puts
+test_hash.my_each { |key, value| puts "Key: #{key}, Value: #{value}" }
 puts
 
 # Tests for #my_each_with_index
@@ -114,3 +115,9 @@ longest_word = test_words.inject do |memo, word|
   memo.length > word.length ? memo : word
 end
 p longest_word
+
+# !/usr/bin/env ruby
+# frozen_string_literal: true
+
+# This module contains an implementation of some of the methods found in the
+# Enumerable module

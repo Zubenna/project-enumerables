@@ -7,7 +7,7 @@ AllCops:
   DisplayCopNames: true
 
 Layout/LineLength:
-  Max: 120
+  Max: 190
 Metrics/MethodLength:
   Max: 75
 Metrics/ModuleLength:
