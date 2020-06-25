@@ -1,5 +1,4 @@
 module Enumerable
-
   def my_each
     return to_enum unless block_given?
 
